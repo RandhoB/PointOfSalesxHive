@@ -1,7 +1,49 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-void main() {
-  runApp(const MyApp());
+import 'package:flutter/foundation.dart';
+import 'package:pointofsales_hive/module/main_navigation/view/main_navigation_view.dart';
+import 'package:pointofsales_hive/service/local_storage_service.dart';
+import 'package:pointofsales_hive/service/product_service.dart';
+import 'package:pointofsales_hive/setup.dart';
+import 'package:pointofsales_hive/state_util.dart';
+import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
+
+/*
+Pos / inventory App
+Master Data 
+- Product CRUD X
+
+(Produk, Stok, Terjual)
+- Transaksi (POS)
+> Puchase Order | Transaksi Pembelian (+stok bertambah)
+> Sales Transaction | Transaksi Penjualan (-stok berkurang)
+
+- Report
+>Sales Report
+> Stock Report
+
+Data : Disimpan ke dalam localstorage (Hive) , aplikasi dapat berjalan dengan offline
+
+Service :
+- ProductService
+- OrderService
+
+*/
+
+void main() async {
+  await initialize();
+  // if (!kIsWeb) {
+  //   var path = await getTemporaryDirectory();
+  //   Hive.init(path.path);
+  // }
+
+  mainStorage = await Hive.openBox('mainstorage');
+
+  await ProductService.getProducts();
+
+  return runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -10,58 +52,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      debugShowCheckedModeBanner: false,
+      title: 'POS',
+      navigatorKey: Get.navigatorKey,
+      theme: ThemeData.dark().copyWith(
+          scaffoldBackgroundColor: Colors.black,
+          appBarTheme: const AppBarTheme(
+            elevation: 0,
+            color: Colors.transparent,
+          ),
+          bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+            backgroundColor: Colors.black,
+            selectedItemColor: Colors.yellow,
+            unselectedItemColor: Colors.grey,
+          )),
+      home: const MainNavigationView(),
     );
   }
 }
