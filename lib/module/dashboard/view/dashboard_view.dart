@@ -150,7 +150,7 @@ class DashboardView extends StatefulWidget {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.network(
+                                Image.asset(
                                   item["icon"],
                                   width: 30.0,
                                 ),

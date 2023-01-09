@@ -38,6 +38,8 @@ void main() async {
   //   var path = await getTemporaryDirectory();
   //   Hive.init(path.path);
   // }
+  var path = await getTemporaryDirectory();
+  Hive.init(path.path);
 
   mainStorage = await Hive.openBox('mainstorage');
 
