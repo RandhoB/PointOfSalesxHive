@@ -31,6 +31,7 @@ Service :
 - OrderService
 
 */
+//43:46
 
 void main() async {
   await initialize();
@@ -45,7 +46,7 @@ void main() async {
 
   await ProductService.getProducts();
 
-  return runApp(const MyApp());
+  return runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

@@ -81,16 +81,24 @@ class ProductListView extends StatefulWidget {
                       }
                       return Future.value(false);
                     },
-                    child: Card(
-                      child: ListTile(
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.grey[200],
-                          backgroundImage: NetworkImage(
-                            item["photo"],
+                    child: InkWell(
+                      onTap: (() async {
+                        await Get.to(ProductFormView(
+                          item: item,
+                        ));
+                        controller.setState(() {});
+                      }),
+                      child: Card(
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.grey[200],
+                            backgroundImage: NetworkImage(
+                              item["photo"],
+                            ),
                           ),
+                          title: Text("${item["productName"]}"),
+                          subtitle: Text("${item["price"]}"),
                         ),
-                        title: Text("${item["productName"]}"),
-                        subtitle: Text("${item["price"]}"),
                       ),
                     ),
                   );

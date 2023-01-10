@@ -11,6 +11,12 @@ class ProductFormController extends State<ProductFormView>
   @override
   void initState() {
     instance = this;
+    if (widget.item != null) {
+      photo = widget.item!["photo"];
+      productName = widget.item!["productName"];
+      price = widget.item!["price"];
+      description = widget.item!["description"];
+    }
     super.initState();
   }
 
