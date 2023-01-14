@@ -19,7 +19,7 @@ class ProductFormView extends StatefulWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("${item != null ? "Edit" : "Create"} ProductForm"),
+        title: Text("${item != null ? "Edit" : "Create"} Product Form"),
         actions: [
           Padding(
             padding: const EdgeInsets.all(12.0),
@@ -58,9 +58,11 @@ class ProductFormView extends StatefulWidget {
               QNumberField(
                 label: "Price",
                 validator: Validator.required,
-                value: controller.price,
+                value: controller.price != null
+                    ? controller.price.toString()
+                    : null,
                 onChanged: (value) {
-                  controller.price = value;
+                  controller.price = double.parse(value);
                 },
               ),
               QMemoField(

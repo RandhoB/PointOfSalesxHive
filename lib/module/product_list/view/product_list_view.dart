@@ -10,7 +10,7 @@ class ProductListView extends StatefulWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("ProductList"),
+        title: const Text("Product List"),
         actions: const [],
       ),
       floatingActionButton: FloatingActionButton(
@@ -96,7 +96,12 @@ class ProductListView extends StatefulWidget {
                               item["photo"],
                             ),
                           ),
-                          title: Text("${item["productName"]}"),
+                          title: Row(
+                            children: [
+                              Text(
+                                  "${item["productName"]}  (${item["stock"]})"),
+                            ],
+                          ),
                           subtitle: Text("${item["price"]}"),
                         ),
                       ),

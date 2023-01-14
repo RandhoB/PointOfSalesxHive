@@ -28,16 +28,31 @@ class ProductFormController extends State<ProductFormView>
 
   String? productName;
   String? photo;
-  String? price;
+  double? price;
   String? description;
   //33:13
+
+  bool get isEditMode {
+    return widget.item != null;
+  }
+
   doSave() async {
-    await ProductService.addProduct(
-      photo: photo!,
-      productName: productName!,
-      price: price!,
-      description: description!,
-    );
+    if (isEditMode) {
+      await ProductService.updateProduct(
+        id: widget.item!["id"],
+        photo: photo!,
+        productName: productName!,
+        price: price!,
+        description: description!,
+      );
+    } else {
+      await ProductService.addProduct(
+        photo: photo!,
+        productName: productName!,
+        price: price!,
+        description: description!,
+      );
+    }
     Get.back();
   }
 }

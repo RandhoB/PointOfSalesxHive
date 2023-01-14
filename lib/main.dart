@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:pointofsales_hive/module/main_navigation/view/main_navigation_view.dart';
 import 'package:pointofsales_hive/service/local_storage_service.dart';
 import 'package:pointofsales_hive/service/product_service.dart';
+import 'package:pointofsales_hive/service/purhcase_order_service.dart';
+import 'package:pointofsales_hive/service/sales_order_service.dart';
 import 'package:pointofsales_hive/setup.dart';
 import 'package:pointofsales_hive/state_util.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +46,11 @@ void main() async {
 
   mainStorage = await Hive.openBox('mainstorage');
 
-  await ProductService.getProducts();
+  await ProductService.loadDataFromDB();
+  await PurchaseOrderService.loadDataFromDB();
+  await SalesOrderService.loadDataFromDB();
 
-  return runApp(MyApp());
+  return runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

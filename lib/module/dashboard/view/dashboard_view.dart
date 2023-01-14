@@ -109,7 +109,7 @@ class DashboardView extends StatefulWidget {
                     },
                     {
                       "icon": "assets/sales_transaction.png",
-                      "label": "Sales\nTransaction",
+                      "label": "Sales\nOrder",
                       "onTap": () => Get.to(const SalesTransactionView()),
                     },
                     {
